@@ -1,0 +1,12 @@
+# Infrastructure — owned by platform team, not app teams
+kubernetes-manifests/
+terraform/
+helm-chart/
+istio-manifests/
+kustomize/
+
+# Auto-generated protobuf code — not hand-written
+src/*/genproto/
+
+# Load testing — not production code
+src/loadgenerator/
