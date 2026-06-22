@@ -1,0 +1,29 @@
+# ── semgrep-paymentservice.yml ──────────────────────────────────
+name: Semgrep — paymentservice
+ 
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "src/paymentservice/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "src/paymentservice/**"
+  schedule:
+    - cron: "0 6 * * 1"   # weekly Monday 6am UTC
+  workflow_dispatch:
+ 
+jobs:
+  semgrep-paymentservice:
+    name: Scan paymentservice
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    if: github.actor != 'dependabot[bot]'
+    env:
+      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep — paymentservice
+        run: semgrep ci --subdir src/paymentservice
