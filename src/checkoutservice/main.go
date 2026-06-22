@@ -21,13 +21,15 @@ import (
 	"os"
 	"time"
 
+	"crypto/tls"
+
 	"cloud.google.com/go/profiler"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
 	"google.golang.org/grpc/status"
 
@@ -212,7 +214,7 @@ func mustConnGRPC(ctx context.Context, conn **grpc.ClientConn, addr string) {
 	_, cancel := context.WithTimeout(ctx, time.Second*3)
 	defer cancel()
 	*conn, err = grpc.NewClient(addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{})),
 		grpc.WithStatsHandler(otelgrpc.NewClientHandler()))
 	if err != nil {
 		panic(errors.Wrapf(err, "grpc: failed to connect %s", addr))
