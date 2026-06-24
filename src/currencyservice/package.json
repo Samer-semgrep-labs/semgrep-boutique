@@ -8,7 +8,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@signalapp/libsignal-client": "0.96.3",
+    "mupdf": "1.27.0",
     "@google-cloud/profiler": "6.0.4",
     "@google-cloud/trace-agent": "8.0.0",
     "@grpc/grpc-js": "1.14.3",
